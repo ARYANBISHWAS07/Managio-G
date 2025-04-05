@@ -22,6 +22,28 @@ To install all required dependencies for the entire project (root, client, and s
 npm run initialize
 ```
 
+## 🔑 Environment Variables
+
+This project requires certain environment variables to be configured for proper functionality. A sample `.envSample` file is provided in the root directory to guide you.
+
+### Steps to Configure:
+1. **Copy the `.envSample` file**:
+   ```bash
+   cp .envSample .env
+   ```
+   On Windows, you can manually duplicate the file and rename it to `.env`.
+
+2. **Edit the `.env` file**:
+   Open the `.env` file in your preferred text editor and replace the placeholder values with your actual credentials and configuration details:
+   - `AUTH_GOOGLE_ID`: Your Google OAuth Client ID.
+   - `AUTH_GOOGLE_SECRET`: Your Google OAuth Client Secret.
+   - `PORT`: The port number for the application (default is `3000`).
+   - `AUTH_GOOGLE_CALLBACK_URL`: The callback URL for Google OAuth (default is `http://localhost:3000/auth/google/callback`).
+   - `SESSION_SECRET`: A random secret string for encrypting session data.
+   - `DATABASE_URI`: Your MongoDB connection URI.
+
+3. **Save the file** and ensure it is not committed to version control by keeping `.env` in the `.gitignore` file.
+
 ## 🧪 Scripts
 
 | Script              | Description                                     |
