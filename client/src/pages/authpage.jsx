@@ -9,7 +9,7 @@ export function LoginForm() {
   const [isSignUp, setIsSignUp] = useState(false); 
 
   const googleAuth = () => {
-    window.open("http://localhost:3000/auth/google", "_self");
+    window.open("http://13.203.180.54:3000/auth/google", "_self");
   };
 
   return (

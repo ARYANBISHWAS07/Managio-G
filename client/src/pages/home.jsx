@@ -96,7 +96,7 @@ export default function Dashboard({ user }) {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/user", { credentials: "include" })
+    fetch("http://13.203.180.54:3000/api/user", { credentials: "include" })
       .then((res) => res.json())
       .then((user) =>
         setUserData({
@@ -131,7 +131,7 @@ export default function Dashboard({ user }) {
       // console.log("from:", fromDate, "to:", toDate);
 
       const res = await axios.get(
-        "http://localhost:3000/api/items/top-bought",
+        "http://13.203.180.54:3000/api/items/top-bought",
         {
           params: {
             fromDate,
@@ -140,7 +140,7 @@ export default function Dashboard({ user }) {
           },
         }
       );
-      const res2 = await axios.get("http://localhost:3000/api/items/top-sold", {
+      const res2 = await axios.get("http://13.203.180.54:3000/api/items/top-sold", {
         params: {
           fromDate,
           toDate,
@@ -148,26 +148,26 @@ export default function Dashboard({ user }) {
         },
       });
       const res3 = await axios.get(
-        "http://localhost:3000/api/customer/all-customers",
+        "http://13.203.180.54:3000/api/customer/all-customers",
         {
           params: { userID: user._id },
         }
       );
 
       const res4 = await axios.get(
-        "http://localhost:3000/api/items/all-items",
+        "http://13.203.180.54:3000/api/items/all-items",
         {
           params: { userID: user._id },
         }
       );
       const res5 = await axios.get(
-        "http://localhost:3000/api/customer/top-customers",
+        "http://13.203.180.54:3000/api/customer/top-customers",
         {
           params: { userID: user._id },
         }
       );
       const res6 = await axios.get(
-        "http://localhost:3000/api/supplier/top-suppliers",
+        "http://13.203.180.54:3000/api/supplier/top-suppliers",
         {
           params: {
             fromDate,
@@ -177,7 +177,7 @@ export default function Dashboard({ user }) {
         }
       );
       const res7 = await axios.get(
-        "http://localhost:3000/api/sales/profit-loss",
+        "http://13.203.180.54:3000/api/sales/profit-loss",
         {
           params: {
             fromDate,
@@ -187,7 +187,7 @@ export default function Dashboard({ user }) {
         }
       );
       const res8 = await axios.get(
-        "http://localhost:3000/api/sales/total-sales",
+        "http://13.203.180.54:3000/api/sales/total-sales",
         {
           params: {
             fromDate,

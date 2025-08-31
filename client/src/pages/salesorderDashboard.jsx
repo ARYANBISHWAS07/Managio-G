@@ -31,7 +31,7 @@ export const SalesOrderDashboard = ({ user }) => {
         const userID = user._id;
         // console.log("User ID:", userID);
         const res = await axios.get(
-          "http://localhost:3000/api/sales/all-sales",
+          "http://13.203.180.54:3000/api/sales/all-sales",
           { params: { userID } }
         );
         if (res.data && res.data.salesDetails) {

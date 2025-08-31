@@ -91,7 +91,7 @@ export default function SalesDrawers({ user }) {
   //   // console.log(order);
   //   try {
   //     const response = await axios.get(
-  //       `http://localhost:3000/newCustomer/customer-list`,
+  //       `http://13.203.180.54:3000/newCustomer/customer-list`,
   //       {
   //         params: { name: name },
   //       }
@@ -123,7 +123,7 @@ export default function SalesDrawers({ user }) {
     if (!itemCode) return;
     try {
       const response = await fetch(
-        `http://localhost:3000/hsn/hsnAdd/${itemCode}`
+        `http://13.203.180.54:3000/hsn/hsnAdd/${itemCode}`
       );
       if (!response.ok) throw new Error("Item not found");
 
@@ -184,7 +184,7 @@ export default function SalesDrawers({ user }) {
 
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/warehouse/info`,
+          `http://13.203.180.54:3000/api/warehouse/info`,
           { params: { userID: user._id } }
         );
         const data = response.data.warehouseDetails;
@@ -216,7 +216,7 @@ export default function SalesDrawers({ user }) {
       };
       // console.log("Sales Details:", salesDetails);
       const response = await axios.post(
-        `http://localhost:3000/api/sales/add-sales`,
+        `http://13.203.180.54:3000/api/sales/add-sales`,
         { ...salesDetails }
       );
 

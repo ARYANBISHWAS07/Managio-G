@@ -39,7 +39,7 @@ const WarehouseDetails = ({user}) => {
     try {
       const userID = user._id;
       const { data } = await axios.get(
-        `http://localhost:3000/api/warehouse/info`,
+        `http://13.203.180.54:3000/api/warehouse/info`,
         {
           params: { userID: userID },
           withCredentials: true,

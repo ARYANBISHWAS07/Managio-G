@@ -16,7 +16,7 @@ function Profile({ user, refreshUser }) {
     // console.log("UsER ID",userID);
     try {
       const { data } = await axios.get(
-        `http://localhost:3000/api/warehouse/info`,
+        `http://13.203.180.54:3000/api/warehouse/info`,
         {
           params: { userID: user?._id },
           withCredentials: true,
@@ -110,7 +110,7 @@ function Profile({ user, refreshUser }) {
   const removeWarehouse = async (index) => {
     const updatedWarehouses = warehouses.filter((_, i) => i !== index);
     setWarehouses(updatedWarehouses);
-    await axios.delete(`http://localhost:3000/api/warehouse/info-delete`, {
+    await axios.delete(`http://13.203.180.54:3000/api/warehouse/info-delete`, {
       params: { userID: user._id, warehouseID: warehouses[index]._id },
       withCredentials: true,
     });
@@ -130,17 +130,17 @@ function Profile({ user, refreshUser }) {
     try {
       if (user?.isNewUser) {
         await axios.post(
-          "http://localhost:3000/api/warehouse/info-add",
+          "http://13.203.180.54:3000/api/warehouse/info-add",
           warehouseData
         );
       } else {
         await axios.put(
-          "http://localhost:3000/api/warehouse/info-update",
+          "http://13.203.180.54:3000/api/warehouse/info-update",
           warehouseData
         );
       }
 
-      await axios.put("http://localhost:3000/api/update", submitData, {
+      await axios.put("http://13.203.180.54:3000/api/update", submitData, {
         withCredentials: true,
       });
       // console.log(submitData);

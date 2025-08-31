@@ -12,7 +12,7 @@ function App() {
 
     const fetchUser = async () => {
         try {
-            const { data } = await axios.get("http://localhost:3000/api/user", { withCredentials: true });
+            const { data } = await axios.get("http://13.203.180.54:3000/api/user", { withCredentials: true });
             setUser(data);
         } catch (err) {
             console.log("User not authenticated");

@@ -51,7 +51,7 @@ const AddCustomerModal = ({ isOpen, onClose, onAddCustomer, user }) => {
 
 
         const newCustomerPersonal = await axios.post(
-        "http://localhost:3000/newCustomer/customer/personal", 
+        "http://13.203.180.54:3000/newCustomer/customer/personal", 
         { userID, ...submitData }, 
         { withCredentials: true }
       );
@@ -60,7 +60,7 @@ const AddCustomerModal = ({ isOpen, onClose, onAddCustomer, user }) => {
       
 
       const newCustomer = await axios.post(
-        "http://localhost:3000/newCustomer/customer-add",
+        "http://13.203.180.54:3000/newCustomer/customer-add",
         submitData,
         { withCredentials: true }
       );

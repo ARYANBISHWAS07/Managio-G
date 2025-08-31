@@ -487,7 +487,7 @@ const ExcelImportDrawer = ({ onImportComplete, user }) => {
     for (const purchase of jsonData) {
       try {
         const response = await axios.post(
-          `http://localhost:3000/api/purchase/add-purchase`,
+          `http://13.203.180.54:3000/api/purchase/add-purchase`,
           purchase
         );
 

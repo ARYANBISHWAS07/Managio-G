@@ -32,7 +32,7 @@ export const PurchaseOrderDashboard = ({ user ,fetchUser}) => {
       try {
         const userID = user._id;
         const res = await axios.get(
-          "http://localhost:3000/api/purchase/all-purchases",
+          "http://13.203.180.54:3000/api/purchase/all-purchases",
           { params: { userID } }
         );
         // console.log(res.data.purchaseDetails);

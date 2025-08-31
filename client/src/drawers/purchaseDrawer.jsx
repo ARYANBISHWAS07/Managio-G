@@ -100,9 +100,9 @@ export default function PurchaseDrawer({ user ,fetchUser}) {
     if (!itemCode) return;
     try {
       const response = await fetch(
-        `http://localhost:3000/hsn/hsnAdd/${itemCode}`
+        `http://13.203.180.54:3000/hsn/hsnAdd/${itemCode}`
       );
-      // const rponce = await fetch(`http://localhost:3000/newCustomer/customer-list`,{name:name} );
+      // const rponce = await fetch(`http://13.203.180.54:3000/newCustomer/customer-list`,{name:name} );
       // const customerData = await response.json(),
 
       if (!response.ok) throw new Error("Item not found");
@@ -166,7 +166,7 @@ export default function PurchaseDrawer({ user ,fetchUser}) {
       }
       // console.log("Purchase Detail:", purchaseDetail);
       const response = await axios.post(
-        `http://localhost:3000/api/purchase/add-purchase`,
+        `http://13.203.180.54:3000/api/purchase/add-purchase`,
         { ...purchaseDetail }
       );
       
@@ -213,7 +213,7 @@ export default function PurchaseDrawer({ user ,fetchUser}) {
       
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/warehouse/info`,
+          `http://13.203.180.54:3000/api/warehouse/info`,
           { params: { userID: user._id } }
         );
         const data = response.data.warehouseDetails;

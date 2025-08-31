@@ -34,7 +34,7 @@ const Sidebar = ({ toggleSidebar, isCollapsed, user ,renderLoadingScree}) => {
   }, [user]);
 
   const logout = () => {
-    window.open("http://localhost:3000/auth/logout", "_self");
+    window.open("http://13.203.180.54:3000/auth/logout", "_self");
   };
 
   const toggleExpandItem = (item) => {
