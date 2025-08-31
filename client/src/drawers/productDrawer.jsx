@@ -31,7 +31,7 @@ const EditProductPopup = ({ isOpen, onClose, product, onUpdate, user }) => {
       // console.log("Selected Warehouse:", selectedWarehouse.toString());
 
       const res = await axios.put(
-        "http://13.203.180.54:3000/api/items/update-item",
+        "http://api.managio.in/api/items/update-item",
         {
           userID: user._id,
           warehouseID: selectedWarehouse.toString(),
