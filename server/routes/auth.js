@@ -30,7 +30,7 @@ router.get("/logout", (req, res) => {
     if (err) {
       return res.status(500).send("Logout failed");
     }
-    res.redirect("https://managio.in/");
+    res.redirect("http://localhost:5173/");
   });
 });
 
@@ -47,7 +47,7 @@ router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/auth/login/failed" }),
   (req, res) => {
-    res.redirect("https://managio.in/");
+    res.redirect("http://localhost:5173/");
   },
 );
 
