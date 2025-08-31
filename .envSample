@@ -6,7 +6,7 @@ AUTH_GOOGLE_SECRET=your-google-client-secret-here
 PORT=3000
 
 # Google OAuth callback URL
-AUTH_GOOGLE_CALLBACK_URL="http://localhost:3000/auth/google/callback"
+AUTH_GOOGLE_CALLBACK_URL="http://13.203.180.54:3000/auth/google/callback"
 
 # Session secret for encrypting session data
 SESSION_SECRET=your-random-session-secret-here

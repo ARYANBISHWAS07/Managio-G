@@ -17,7 +17,8 @@ import warehouseRoutes from "./routes/warehouseRoute.js";
 import newCustomerRoute from "./routes/newCustomerRoute.js";
 import supplierRoutes from "./routes/supplierRoutes.js"
 
-dotenv.config({ path: "../.env" });
+dotenv.config({ path: './server/.env' });
+
 
 const app = express();
 // MongoDB Implementation
@@ -55,7 +56,7 @@ app.use(bodyParser.json()); // Parse JSON request body
 
 // Connect to MongoDB
 mongoose
-  .connect(MongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(MongoUri)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Could not connect to MongoDB:", err));
 
@@ -70,6 +71,10 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.get("/", (req, res) => {
+  res.send("Server is working");
+});
 
 
 app.use("/hsn", hsnRoutes)
@@ -88,6 +93,6 @@ app.use("/api/customer", customerRoutes);
 //___________________________________________________________________________________________________________________________________________________
 // const port = process.env.PORT || 3000;
 
-app.listen(3000, () => {
+app.listen(3000,"0.0.0.0", () => {
   console.log(`Server running on port ${3000}`);
 }); 

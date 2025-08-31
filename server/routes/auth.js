@@ -30,7 +30,7 @@ router.get("/logout", (req, res) => {
     if (err) {
       return res.status(500).send("Logout failed");
     }
-    res.redirect("http://localhost:5173/");
+    res.redirect("http://managio-s3.s3-website.ap-south-1.amazonaws.com/");
   });
 });
 
@@ -47,7 +47,7 @@ router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/auth/login/failed" }),
   (req, res) => {
-    res.redirect("http://localhost:5173/");
+    res.redirect("http://managio-s3.s3-website.ap-south-1.amazonaws.com/");
   },
 );
 
