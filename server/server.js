@@ -15,10 +15,9 @@ import purchaseRoutes from "./routes/purchaseRoute.js";
 import salesRoutes from "./routes/salesRoute.js";
 import warehouseRoutes from "./routes/warehouseRoute.js";
 import newCustomerRoute from "./routes/newCustomerRoute.js";
-import supplierRoutes from "./routes/supplierRoutes.js"
+import supplierRoutes from "./routes/supplierRoutes.js";
 
-dotenv.config({ path: './server/.env' });
-
+dotenv.config({ path: "./server/.env" });
 
 const app = express();
 // MongoDB Implementation
@@ -31,10 +30,10 @@ app.use(
     origin: "http://localhost:5173", // Allow only the frontend to access this server
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
-  }),
+  })
 ); // Enable CORS for all routes
 
-// const allowedOrigins = [ 
+// const allowedOrigins = [
 //   "http://localhost:5173", // Vite might run on a different port
 // ];
 
@@ -64,10 +63,15 @@ mongoose
 //Routes for Google OAuth
 app.use(
   session({
-    secret: "secret", // Use a secure secret
+    secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
-  }),
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+    },
+  })
 );
 app.use(passport.initialize());
 app.use(passport.session());
@@ -76,23 +80,20 @@ app.get("/", (req, res) => {
   res.send("Server is working");
 });
 
-
-app.use("/hsn", hsnRoutes)
-app.use("/auth",authRoutes)
-app.use("/api", userRoutes)
-app.use("/api/purchase", purchaseRoutes)
-app.use("/api/sales", salesRoutes)
+app.use("/hsn", hsnRoutes);
+app.use("/auth", authRoutes);
+app.use("/api", userRoutes);
+app.use("/api/purchase", purchaseRoutes);
+app.use("/api/sales", salesRoutes);
 app.use("/api/supplier", supplierRoutes);
-app.use("/api/warehouse", warehouseRoutes)
+app.use("/api/warehouse", warehouseRoutes);
 // app.use("/newCustomer",newCustomerRoute)
 app.use("/api/items", itemRoutes);
 app.use("/api/customer", customerRoutes);
 
-
-
 //___________________________________________________________________________________________________________________________________________________
 // const port = process.env.PORT || 3000;
 
-app.listen(3000,"0.0.0.0", () => {
+app.listen(3000, "0.0.0.0", () => {
   console.log(`Server running on port ${3000}`);
-}); 
+});
