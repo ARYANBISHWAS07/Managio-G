@@ -32,7 +32,7 @@ export const PurchaseOrderDashboard = ({ user ,fetchUser}) => {
       try {
         const userID = user._id;
         const res = await axios.get(
-          "http://api.managio.in/api/purchase/all-purchases",
+          "https://api.managio.in/api/purchase/all-purchases",
           { params: { userID } }
         );
         // console.log(res.data.purchaseDetails);

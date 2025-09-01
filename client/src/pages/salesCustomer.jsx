@@ -48,7 +48,7 @@ const CustomerManagement = ({ user }) => {
     const fetchCustomers = async () => {
       const userID = user._id;
       try {
-        const response = await axios.get("http://api.managio.in/api/customer/all-customers", {
+        const response = await axios.get("https://api.managio.in/api/customer/all-customers", {
           params: { userID: userID },
         });
         setCustomers(response.data);
@@ -71,7 +71,7 @@ const CustomerManagement = ({ user }) => {
   // const handleDeleteCustomer = async (customerId) => {
   //   try {
   //     const deletedCustomer = customers.find((customer) => customer._id === customerId);
-  //     await axios.delete(`http://api.managio.in/api/customer/delete-customer`, {
+  //     await axios.delete(`https://api.managio.in/api/customer/delete-customer`, {
   //       params: { userID: user._id, customerID: customerId },
   //     });
   //     setCustomers((prevCustomers) => prevCustomers.filter((customer) => customer._id !== customerId));

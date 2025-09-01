@@ -39,7 +39,7 @@ const WarehouseDetails = ({user}) => {
     try {
       const userID = user._id;
       const { data } = await axios.get(
-        `http://api.managio.in/api/warehouse/info`,
+        `https://api.managio.in/api/warehouse/info`,
         {
           params: { userID: userID },
           withCredentials: true,

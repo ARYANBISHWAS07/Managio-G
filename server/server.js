@@ -4,6 +4,7 @@ import * as dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import session from "express-session";
+import { sessionStore } from "./config/sessionStore.js";
 import passport from "./config/authcontroller.js";
 
 import authRoutes from "./routes/auth.js";
@@ -27,7 +28,7 @@ const MongoUri = process.env.DATABASE_URI;
 // Middleware
 app.use(
   cors({
-    origin: "*", // Allow only the frontend to access this server
+    origin: "https://managio.in", // Allow only the deployed frontend
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
@@ -66,9 +67,9 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    store: sessionStore,
     cookie: {
       httpOnly: true,
-      // Use dynamic settings for local/deployed as discussed earlier
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       domain: process.env.NODE_ENV === "production" ? ".managio.in" : undefined,

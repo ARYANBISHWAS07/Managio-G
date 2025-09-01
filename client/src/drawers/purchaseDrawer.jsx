@@ -100,9 +100,9 @@ export default function PurchaseDrawer({ user ,fetchUser}) {
     if (!itemCode) return;
     try {
       const response = await fetch(
-        `http://api.managio.in/hsn/hsnAdd/${itemCode}`
+        `https://api.managio.in/hsn/hsnAdd/${itemCode}`
       );
-      // const rponce = await fetch(`http://api.managio.in/newCustomer/customer-list`,{name:name} );
+      // const rponce = await fetch(`https://api.managio.in/newCustomer/customer-list`,{name:name} );
       // const customerData = await response.json(),
 
       if (!response.ok) throw new Error("Item not found");
@@ -166,7 +166,7 @@ export default function PurchaseDrawer({ user ,fetchUser}) {
       }
       // console.log("Purchase Detail:", purchaseDetail);
       const response = await axios.post(
-        `http://api.managio.in/api/purchase/add-purchase`,
+        `https://api.managio.in/api/purchase/add-purchase`,
         { ...purchaseDetail }
       );
       
@@ -213,7 +213,7 @@ export default function PurchaseDrawer({ user ,fetchUser}) {
       
       try {
         const response = await axios.get(
-          `http://api.managio.in/api/warehouse/info`,
+          `https://api.managio.in/api/warehouse/info`,
           { params: { userID: user._id } }
         );
         const data = response.data.warehouseDetails;

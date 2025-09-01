@@ -20,7 +20,7 @@ const Navbar = ({ user }) => {
   }, [user]);
 
   const logout = () => {
-    window.open("http://api.managio.in/auth/logout", "_self");
+    window.open("https://api.managio.in/auth/logout", "_self");
   };
 
   const navigationLinks = [

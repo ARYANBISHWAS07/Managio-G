@@ -96,7 +96,7 @@ export default function Dashboard({ user }) {
   }, []);
 
   useEffect(() => {
-    fetch("http://api.managio.in/api/user", { credentials: "include" })
+    fetch("https://api.managio.in/api/user", { credentials: "include" })
       .then((res) => res.json())
       .then((user) =>
         setUserData({
@@ -131,7 +131,7 @@ export default function Dashboard({ user }) {
       // console.log("from:", fromDate, "to:", toDate);
 
       const res = await axios.get(
-        "http://api.managio.in/api/items/top-bought",
+        "https://api.managio.in/api/items/top-bought",
         {
           params: {
             fromDate,
@@ -140,7 +140,7 @@ export default function Dashboard({ user }) {
           },
         }
       );
-      const res2 = await axios.get("http://api.managio.in/api/items/top-sold", {
+      const res2 = await axios.get("https://api.managio.in/api/items/top-sold", {
         params: {
           fromDate,
           toDate,
@@ -148,26 +148,26 @@ export default function Dashboard({ user }) {
         },
       });
       const res3 = await axios.get(
-        "http://api.managio.in/api/customer/all-customers",
+        "https://api.managio.in/api/customer/all-customers",
         {
           params: { userID: user._id },
         }
       );
 
       const res4 = await axios.get(
-        "http://api.managio.in/api/items/all-items",
+        "https://api.managio.in/api/items/all-items",
         {
           params: { userID: user._id },
         }
       );
       const res5 = await axios.get(
-        "http://api.managio.in/api/customer/top-customers",
+        "https://api.managio.in/api/customer/top-customers",
         {
           params: { userID: user._id },
         }
       );
       const res6 = await axios.get(
-        "http://api.managio.in/api/supplier/top-suppliers",
+        "https://api.managio.in/api/supplier/top-suppliers",
         {
           params: {
             fromDate,
@@ -177,7 +177,7 @@ export default function Dashboard({ user }) {
         }
       );
       const res7 = await axios.get(
-        "http://api.managio.in/api/sales/profit-loss",
+        "https://api.managio.in/api/sales/profit-loss",
         {
           params: {
             fromDate,
@@ -187,7 +187,7 @@ export default function Dashboard({ user }) {
         }
       );
       const res8 = await axios.get(
-        "http://api.managio.in/api/sales/total-sales",
+        "https://api.managio.in/api/sales/total-sales",
         {
           params: {
             fromDate,

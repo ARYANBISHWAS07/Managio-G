@@ -16,7 +16,7 @@ function Profile({ user, refreshUser }) {
     // console.log("UsER ID",userID);
     try {
       const { data } = await axios.get(
-        `http://api.managio.in/api/warehouse/info`,
+        `https://api.managio.in/api/warehouse/info`,
         {
           params: { userID: user?._id },
           withCredentials: true,
@@ -110,7 +110,7 @@ function Profile({ user, refreshUser }) {
   const removeWarehouse = async (index) => {
     const updatedWarehouses = warehouses.filter((_, i) => i !== index);
     setWarehouses(updatedWarehouses);
-    await axios.delete(`http://api.managio.in/api/warehouse/info-delete`, {
+    await axios.delete(`https://api.managio.in/api/warehouse/info-delete`, {
       params: { userID: user._id, warehouseID: warehouses[index]._id },
       withCredentials: true,
     });
@@ -130,17 +130,17 @@ function Profile({ user, refreshUser }) {
     try {
       if (user?.isNewUser) {
         await axios.post(
-          "http://api.managio.in/api/warehouse/info-add",
+          "https://api.managio.in/api/warehouse/info-add",
           warehouseData
         );
       } else {
         await axios.put(
-          "http://api.managio.in/api/warehouse/info-update",
+          "https://api.managio.in/api/warehouse/info-update",
           warehouseData
         );
       }
 
-      await axios.put("http://api.managio.in/api/update", submitData, {
+      await axios.put("https://api.managio.in/api/update", submitData, {
         withCredentials: true,
       });
       // console.log(submitData);

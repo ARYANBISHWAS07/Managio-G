@@ -38,7 +38,7 @@ const ProductsPage = ({ user }) => {
 
         const userID = user._id;
         const res = await axios.get(
-          `http://api.managio.in/api/items/all-items`,
+          `https://api.managio.in/api/items/all-items`,
           {
             params: { userID: userID },
           }

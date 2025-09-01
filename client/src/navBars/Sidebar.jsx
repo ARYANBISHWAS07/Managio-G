@@ -34,7 +34,7 @@ const Sidebar = ({ toggleSidebar, isCollapsed, user ,renderLoadingScree}) => {
   }, [user]);
 
   const logout = () => {
-    window.open("http://api.managio.in/auth/logout", "_self");
+    window.open("https://api.managio.in/auth/logout", "_self");
   };
 
   const toggleExpandItem = (item) => {

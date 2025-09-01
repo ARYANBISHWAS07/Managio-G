@@ -91,7 +91,7 @@ export default function SalesDrawers({ user }) {
   //   // console.log(order);
   //   try {
   //     const response = await axios.get(
-  //       `http://api.managio.in/newCustomer/customer-list`,
+  //       `https://api.managio.in/newCustomer/customer-list`,
   //       {
   //         params: { name: name },
   //       }
@@ -123,7 +123,7 @@ export default function SalesDrawers({ user }) {
     if (!itemCode) return;
     try {
       const response = await fetch(
-        `http://api.managio.in/hsn/hsnAdd/${itemCode}`
+        `https://api.managio.in/hsn/hsnAdd/${itemCode}`
       );
       if (!response.ok) throw new Error("Item not found");
 
@@ -184,7 +184,7 @@ export default function SalesDrawers({ user }) {
 
       try {
         const response = await axios.get(
-          `http://api.managio.in/api/warehouse/info`,
+          `https://api.managio.in/api/warehouse/info`,
           { params: { userID: user._id } }
         );
         const data = response.data.warehouseDetails;
@@ -216,7 +216,7 @@ export default function SalesDrawers({ user }) {
       };
       // console.log("Sales Details:", salesDetails);
       const response = await axios.post(
-        `http://api.managio.in/api/sales/add-sales`,
+        `https://api.managio.in/api/sales/add-sales`,
         { ...salesDetails }
       );
 

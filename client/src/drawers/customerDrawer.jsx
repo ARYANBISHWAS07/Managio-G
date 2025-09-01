@@ -51,7 +51,7 @@ const AddCustomerModal = ({ isOpen, onClose, onAddCustomer, user }) => {
 
 
         const newCustomerPersonal = await axios.post(
-        "http://api.managio.in/newCustomer/customer/personal", 
+        "https://api.managio.in/newCustomer/customer/personal", 
         { userID, ...submitData }, 
         { withCredentials: true }
       );
@@ -60,7 +60,7 @@ const AddCustomerModal = ({ isOpen, onClose, onAddCustomer, user }) => {
       
 
       const newCustomer = await axios.post(
-        "http://api.managio.in/newCustomer/customer-add",
+        "https://api.managio.in/newCustomer/customer-add",
         submitData,
         { withCredentials: true }
       );

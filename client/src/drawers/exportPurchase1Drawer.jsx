@@ -487,7 +487,7 @@ const ExcelImportDrawer = ({ onImportComplete, user }) => {
     for (const purchase of jsonData) {
       try {
         const response = await axios.post(
-          `http://api.managio.in/api/purchase/add-purchase`,
+          `https://api.managio.in/api/purchase/add-purchase`,
           purchase
         );
 

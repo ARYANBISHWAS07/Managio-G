@@ -31,7 +31,7 @@ export const SalesOrderDashboard = ({ user }) => {
         const userID = user._id;
         // console.log("User ID:", userID);
         const res = await axios.get(
-          "http://api.managio.in/api/sales/all-sales",
+          "https://api.managio.in/api/sales/all-sales",
           { params: { userID } }
         );
         if (res.data && res.data.salesDetails) {

@@ -9,7 +9,7 @@ export function LoginForm() {
   const [isSignUp, setIsSignUp] = useState(false); 
 
   const googleAuth = () => {
-    window.open("http://api.managio.in/auth/google", "_self");
+    window.open("https://api.managio.in/auth/google", "_self");
   };
 
   return (

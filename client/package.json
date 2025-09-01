@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "proxy": "http://api.managio.in",
+  "proxy": "https://api.managio.in",
   "scripts": {
     "start": "vite",
     "build": "vite build",
