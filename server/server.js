@@ -24,16 +24,14 @@ const app = express();
 //_______________________________________________________________________________________________________________________________________________
 const MongoUri = process.env.DATABASE_URI;
 
-
 app.use(
   cors({
     origin: "https://managio.in",
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
-); 
-app.use(bodyParser.json()); 
-
+);
+app.use(bodyParser.json());
 
 mongoose
   .connect(MongoUri)
@@ -44,17 +42,17 @@ mongoose
 
 app.use((req, res, next) => {
   // Debug: Log session and cookie info on every request
-  res.on('finish', () => {
+  res.on("finish", () => {
     if (req.session) {
-      console.log('Session ID:', req.sessionID);
-      console.log('Session object:', req.session);
+      console.log("Session ID:", req.sessionID);
+      console.log("Session object:", req.session);
     } else {
-      console.log('No session on request');
+      console.log("No session on request");
     }
     if (req.headers.cookie) {
-      console.log('Request cookies:', req.headers.cookie);
+      console.log("Request cookies:", req.headers.cookie);
     } else {
-      console.log('No cookies sent with request');
+      console.log("No cookies sent with request");
     }
   });
   next();
@@ -67,9 +65,9 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // secure cookies in production
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // 'none' for cross-site cookies in prod
-      domain: process.env.NODE_ENV === "production" ? ".managio.in" : undefined, // set your production domain here
+      secure: true,
+      sameSite: "none",
+      domain: ".managio.in", // This covers both api.mangio.in and managio.in
     },
   })
 );
