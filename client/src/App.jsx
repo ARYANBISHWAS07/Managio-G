@@ -12,7 +12,7 @@ function App() {
 
     const fetchUser = async () => {
         try {
-            const { data } = await axios.get("http://api.managio.in/api/user", { withCredentials: true });
+            const { data } = await axios.get("http://api.managio.in/auth/user", { withCredentials: true });
             setUser(data);
         } catch (err) {
             console.log("User not authenticated");

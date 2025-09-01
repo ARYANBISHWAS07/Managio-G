@@ -52,15 +52,19 @@ router.get(
 );
 
 router.get("/user", async (req, res) => {
-  if (!req.isAuthenticated()) {
-    return res.status(401).json({ error: "Not authenticated" });
-  }
-
   try {
+    if (!req.isAuthenticated() || !req.user) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+
     const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
     // Check if token expired and refresh it
     if (!user.accessToken) {
+      console.log("No access token found");
       return res.status(401).json({ error: "No access token found" });
     }
 
@@ -85,7 +89,8 @@ router.get("/user", async (req, res) => {
 
     res.json({ user: googleUser });
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    console.error("/auth/user error:", error);
+    res.status(500).json({ error: "Server error", details: error.message });
   }
 });
 

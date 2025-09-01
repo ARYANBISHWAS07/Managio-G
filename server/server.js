@@ -70,7 +70,7 @@ app.use(
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // secure cookies in production
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // 'none' for cross-site cookies in prod
-  domain: process.env.NODE_ENV === "production" ? ".api.managio.in" : undefined, // set your production domain here
+      domain: process.env.NODE_ENV === "production" ? ".managio.in" : undefined, // set your production domain here
     },
   })
 );
