@@ -6,6 +6,9 @@ import { User } from "../models/user.js";
 const router = express.Router();
 
 router.get("/login/success", async (req, res) => {
+  console.log("Session object:", req.session); 
+  console.log("Passport user:", req.user);     
+
   if (req.user) {
     const user = await User.findById(req.user._id);
     res.status(200).json({
@@ -17,6 +20,7 @@ router.get("/login/success", async (req, res) => {
     res.status(403).json({ error: true, message: "Not authorized" });
   }
 });
+
 
 router.get("/login/failed", (req, res) => {
   res.status(401).json({
