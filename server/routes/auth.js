@@ -57,10 +57,9 @@ router.get(
 
 router.get("/user", async (req, res) => {
   try {
-    if (!req.isAuthenticated()) {
-    user
-    return res.status(401).json({ error: "Not authenticated" });
-}
+    if (!req.isAuthenticated() || !req.user) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
 
     const user = await User.findById(req.user._id);
     if (!user) {
