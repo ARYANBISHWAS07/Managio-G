@@ -27,7 +27,7 @@ const MongoUri = process.env.DATABASE_URI;
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:5173", // Allow only the frontend to access this server
+    origin: "https://managio.in", // Allow only the frontend to access this server
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
