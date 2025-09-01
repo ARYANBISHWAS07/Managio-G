@@ -4,7 +4,6 @@ import * as dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import session from "express-session";
-import { sessionStore } from "./config/sessionStore.js";
 import passport from "./config/authcontroller.js";
 
 import authRoutes from "./routes/auth.js";
@@ -28,7 +27,7 @@ const MongoUri = process.env.DATABASE_URI;
 // Middleware
 app.use(
   cors({
-    origin: "https://managio.in", // Allow only the deployed frontend
+    origin: "http://localhost:5173", // Allow only the frontend to access this server
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
@@ -67,16 +66,14 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    store: sessionStore,
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      domain: process.env.NODE_ENV === "production" ? ".managio.in" : undefined,
+      secure: process.env.NODE_ENV === "production", // secure cookies in production
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // 'none' for cross-site cookies in prod
+      domain: process.env.NODE_ENV === "production" ? ".api.managio.in" : undefined, // set your production domain here
     },
   })
 );
-
 app.use(passport.initialize());
 app.use(passport.session());
 
