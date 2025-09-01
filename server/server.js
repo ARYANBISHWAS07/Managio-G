@@ -61,21 +61,21 @@ mongoose
 
 //_______________________________________________________________________________________________________________________________________________
 //Routes for Google OAuth
-app.use((req, res, next) => {
-  // Allow local frontend testing with deployed backend
-  const isLocalFrontend = req.headers.origin && req.headers.origin.startsWith('http://localhost');
+app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: !isLocalFrontend, // secure only if not local frontend
-      sameSite: isLocalFrontend ? 'lax' : 'none',
-      domain: isLocalFrontend ? undefined : '.managio.in',
+      // Use dynamic settings for local/deployed as discussed earlier
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      domain: process.env.NODE_ENV === "production" ? ".managio.in" : undefined,
     },
-  })(req, res, next);
-});
+  })
+);
+
 app.use(passport.initialize());
 app.use(passport.session());
 
