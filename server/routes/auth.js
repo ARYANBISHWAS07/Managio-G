@@ -51,6 +51,12 @@ router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/auth/login/failed" }),
   (req, res) => {
+    console.log("[OAuth Callback] Session object:", req.session);
+    console.log("[OAuth Callback] Passport user:", req.user);
+    if (req.sessionID) {
+      res.cookie('debug-session-id', req.sessionID, { httpOnly: false });
+      console.log("[OAuth Callback] Set debug-session-id cookie:", req.sessionID);
+    }
     res.redirect("https://managio.in/");
   },
 );
