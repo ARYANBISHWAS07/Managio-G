@@ -20,47 +20,28 @@ import supplierRoutes from "./routes/supplierRoutes.js";
 dotenv.config({ path: "./server/.env" });
 
 const app = express();
-// MongoDB Implementation
+
 //_______________________________________________________________________________________________________________________________________________
 const MongoUri = process.env.DATABASE_URI;
 
-// Middleware
+
 app.use(
   cors({
-    origin: "https://managio.in", // Allow only the frontend to access this server
+    origin: "https://managio.in",
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
-); // Enable CORS for all routes
+); 
+app.use(bodyParser.json()); 
 
-// const allowedOrigins = [
-//   "http://localhost:5173", // Vite might run on a different port
-// ];
 
-// app.use(
-//   cors({
-//     origin: function (origin, callback) {
-//       if (!origin || allowedOrigins.includes(origin)) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error("Not allowed by CORS"));
-//       }
-//     },
-//     methods: "GET,POST,PUT,DELETE",
-//     credentials: true,
-//   }),
-// );
-
-app.use(bodyParser.json()); // Parse JSON request body
-
-// Connect to MongoDB
 mongoose
   .connect(MongoUri)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Could not connect to MongoDB:", err));
 
 //_______________________________________________________________________________________________________________________________________________
-//Routes for Google OAuth
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -70,7 +51,7 @@ app.use(
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // secure cookies in production
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // 'none' for cross-site cookies in prod
-      domain: process.env.NODE_ENV === "production" ? ".api.managio.in" : undefined, // set your production domain here
+      domain: process.env.NODE_ENV === "production" ? ".managio.in" : undefined, // set your production domain here
     },
   })
 );
@@ -88,7 +69,6 @@ app.use("/api/purchase", purchaseRoutes);
 app.use("/api/sales", salesRoutes);
 app.use("/api/supplier", supplierRoutes);
 app.use("/api/warehouse", warehouseRoutes);
-// app.use("/newCustomer",newCustomerRoute)
 app.use("/api/items", itemRoutes);
 app.use("/api/customer", customerRoutes);
 
