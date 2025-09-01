@@ -68,8 +68,9 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production", // secure cookies in production
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // 'none' for cross-site cookies in prod
+  domain: process.env.NODE_ENV === "production" ? ".api.managio.in" : undefined, // set your production domain here
     },
   })
 );
