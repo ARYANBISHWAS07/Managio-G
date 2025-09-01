@@ -42,6 +42,24 @@ mongoose
 
 //_______________________________________________________________________________________________________________________________________________
 
+app.use((req, res, next) => {
+  // Debug: Log session and cookie info on every request
+  res.on('finish', () => {
+    if (req.session) {
+      console.log('Session ID:', req.sessionID);
+      console.log('Session object:', req.session);
+    } else {
+      console.log('No session on request');
+    }
+    if (req.headers.cookie) {
+      console.log('Request cookies:', req.headers.cookie);
+    } else {
+      console.log('No cookies sent with request');
+    }
+  });
+  next();
+});
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
