@@ -1,29 +1,15 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import axios from "axios";
 import Lottie from "lottie-react";
 import loadingAnimation from "../src/assets/loading.json";
-import AppRoutes from "./routes/Routes"; 
+import AppRoutes from "./routes/Routes";
+import { useAuth } from "./context/AuthContext.jsx";
 
 function App() {
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const { user, loading, refreshUser } = useAuth();
     const [delayComplete, setDelayComplete] = useState(false);
 
-    const fetchUser = async () => {
-        try {
-            const { data } = await axios.get("https://api.managio.in/auth/user", { withCredentials: true });
-            setUser(data);
-        } catch (err) {
-            console.log("User not authenticated");
-            setUser(null);
-        } finally {
-            setLoading(false);
-        }
-    };
-
     useEffect(() => {
-        fetchUser();
         const delayTimer = setTimeout(() => {
             setDelayComplete(true);
         }, 2000);
@@ -41,7 +27,7 @@ function App() {
 
     return (
         <Router>
-            <AppRoutes user={user} fetchUser={fetchUser} /> 
+            <AppRoutes user={user} fetchUser={refreshUser} />
         </Router>
     );
 }

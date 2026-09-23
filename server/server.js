@@ -1,11 +1,12 @@
+import "./config/env.js";
+
+import { createServer } from "http";
 import bodyParser from "body-parser";
 import cors from "cors";
-import * as dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
-import session from "express-session";
-import passport from "./config/authcontroller.js";
 
+import { initSocket } from "./socket.js";
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/userRoute.js";
 import hsnRoutes from "./routes/hsnRoutes.js";
@@ -17,8 +18,6 @@ import warehouseRoutes from "./routes/warehouseRoute.js";
 import newCustomerRoute from "./routes/newCustomerRoute.js";
 import supplierRoutes from "./routes/supplierRoutes.js";
 
-dotenv.config({ path: "./server/.env" });
-
 const app = express();
 
 //_______________________________________________________________________________________________________________________________________________
@@ -26,9 +25,9 @@ const MongoUri = process.env.DATABASE_URI;
 
 app.use(
   cors({
-    origin: "https://managio.in",
+    origin: "http://localhost:5173",
     methods: "GET,POST,PUT,DELETE",
-    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 app.use(bodyParser.json());
@@ -40,40 +39,6 @@ mongoose
 
 //_______________________________________________________________________________________________________________________________________________
 
-app.use((req, res, next) => {
-  // Debug: Log session and cookie info on every request
-  res.on("finish", () => {
-    if (req.session) {
-      console.log("Session ID:", req.sessionID);
-      console.log("Session object:", req.session);
-    } else {
-      console.log("No session on request");
-    }
-    if (req.headers.cookie) {
-      console.log("Request cookies:", req.headers.cookie);
-    } else {
-      console.log("No cookies sent with request");
-    }
-  });
-  next();
-});
-
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      domain: ".managio.in", // This covers both api.mangio.in and managio.in
-    },
-  })
-);
-app.use(passport.initialize());
-app.use(passport.session());
-
 app.get("/", (req, res) => {
   res.send("Server is working");
 });
@@ -81,6 +46,7 @@ app.get("/", (req, res) => {
 app.use("/hsn", hsnRoutes);
 app.use("/auth", authRoutes);
 app.use("/api", userRoutes);
+app.use("/newCustomer", newCustomerRoute);
 app.use("/api/purchase", purchaseRoutes);
 app.use("/api/sales", salesRoutes);
 app.use("/api/supplier", supplierRoutes);
@@ -91,6 +57,9 @@ app.use("/api/customer", customerRoutes);
 //___________________________________________________________________________________________________________________________________________________
 // const port = process.env.PORT || 3000;
 
-app.listen(3000, "0.0.0.0", () => {
+const httpServer = createServer(app);
+initSocket(httpServer);
+
+httpServer.listen(3000, "0.0.0.0", () => {
   console.log(`Server running on port ${3000}`);
 });

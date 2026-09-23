@@ -1,120 +1,49 @@
 import express from "express";
-import passport from "passport";
-import { fetchGoogleUser, refreshAccessToken } from "../utils/tokenHelper.js";
+import { auth, isConfigured } from "../config/firebaseAdmin.js";
+import { verifyFirebaseToken } from "../middleware/authMiddleware.js";
 import { User } from "../models/user.js";
 
 const router = express.Router();
 
-router.get("/login/success", async (req, res) => {
-  console.log("Session object:", req.session); 
-  console.log("Passport user:", req.user);     
+router.post("/sync", async (req, res) => {
+  const authHeader = req.headers.authorization || "";
+  const idToken = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : null;
 
-  if (req.user) {
-    const user = await User.findById(req.user._id);
-    res.status(200).json({
-      error: false,
-      message: "Successfully Logged in",
-      user: user,
-    });
-  } else {
-    res.status(403).json({ error: true, message: "Not authorized" });
+  if (!idToken) {
+    return res.status(401).json({ error: "Not authenticated" });
   }
-});
 
+  if (!isConfigured) {
+    return res.status(500).json({ error: "Firebase Admin not configured" });
+  }
 
-router.get("/login/failed", (req, res) => {
-  res.status(401).json({
-    error: true,
-    message: "Login failed",
-  });
-});
-
-router.get("/logout", (req, res) => {
-  req.logout((err) => {
-    if (err) {
-      return res.status(500).send("Logout failed");
-    }
-    res.redirect("https://managio.in/");
-  });
-});
-
-router.get(
-  "/google",
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
-    accessType: "online",
-    prompt: "consent",
-  }),
-);
-
-router.get(
-  "/google/callback",
-  passport.authenticate("google", { failureRedirect: "/auth/login/failed" }),
-  (req, res) => {
-    console.log("[OAuth Callback] Session object:", req.session);
-    console.log("[OAuth Callback] Passport user:", req.user);
-    if (req.sessionID) {
-      res.cookie('debug-session-id', req.sessionID, { httpOnly: false });
-      console.log("[OAuth Callback] Set debug-session-id cookie:", req.sessionID);
-    }
-    res.redirect("https://managio.in/");
-  },
-);
-
-router.get("/user", async (req, res) => {
   try {
-    if (!req.isAuthenticated() || !req.user) {
-      return res.status(401).json({ error: "Not authenticated" });
-    }
+    const decoded = await auth().verifyIdToken(idToken);
+    const authType = decoded.firebase?.sign_in_provider === "google.com" ? "google" : "password";
 
-    const user = await User.findById(req.user._id);
+    let user = await User.findOne({ firebaseUid: decoded.uid });
+
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    // Check if token expired and refresh it
-    if (!user.accessToken) {
-      console.log("No access token found");
-      return res.status(401).json({ error: "No access token found" });
-    }
-
-    let googleUser = await fetchGoogleUser(user.accessToken);
-
-    // If token is expired, refresh it
-    if (!googleUser || googleUser.error) {
-      console.log("Access token expired, refreshing...");
-      const newAccessToken = await refreshAccessToken(user.refreshToken);
-
-      if (!newAccessToken) {
-        return res.status(401).json({ error: "Failed to refresh token" });
-      }
-
-      // Update user with new token
-      user.accessToken = newAccessToken;
+      user = new User({
+        firebaseUid: decoded.uid,
+        email: decoded.email,
+        name: decoded.name || "",
+        profileImg: decoded.picture || undefined,
+        authType,
+        isNewUser: true,
+      });
       await user.save();
-
-      // Fetch user data again
-      googleUser = await fetchGoogleUser(newAccessToken);
     }
 
-    res.json({ user: googleUser });
+    res.status(200).json(user);
   } catch (error) {
-    console.error("/auth/user error:", error);
-    res.status(500).json({ error: "Server error", details: error.message });
+    console.error("Error in /auth/sync:", error.message);
+    res.status(401).json({ error: "Invalid or expired token" });
   }
 });
 
-// router.put("/user/update",async (req,res)=>{
-//     if(!req.isAuthenticated()){
-//         return res.status(401).json({error:"Not Authenticated"})
-//     }
-//     else{
-//         try{
-//             const user = await new User.findUpdateById(req.user._id);
-//             user.name = req.body.name;
-
-//         }
-//     }
-// })
+router.get("/user", verifyFirebaseToken, (req, res) => {
+  res.status(200).json(req.user);
+});
 
 export default router;

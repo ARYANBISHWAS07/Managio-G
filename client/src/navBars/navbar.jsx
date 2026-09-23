@@ -10,18 +10,16 @@ import {
 } from "@/components/ui/navigation-menu";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "../context/AuthContext.jsx";
 
 const Navbar = ({ user }) => {
+  const { logout } = useAuth();
   const [activeIndex, setActiveIndex] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   useEffect(() => {
     console.log("User Data:", user);
   }, [user]);
-
-  const logout = () => {
-    window.open("https://api.managio.in/auth/logout", "_self");
-  };
 
   const navigationLinks = [
     {
