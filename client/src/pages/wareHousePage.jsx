@@ -19,7 +19,7 @@ const WarehouseDetails = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedWarehouse, setSelectedWarehouse] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchWarehouseDetail = async () => {
     if (!user?._id) return;

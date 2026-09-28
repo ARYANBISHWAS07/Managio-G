@@ -115,6 +115,9 @@ export const PurchaseOrderDashboard = ({ user, fetchUser }) => {
               {filteredPurchases.length} order{filteredPurchases.length === 1 ? "" : "s"} · {currency(totalValue)} total
             </p>
           </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
+            Purchase Order Details
+          </h1>
         </div>
         <div className="flex items-center gap-2">
           <ExcelImportDrawer user={user} />

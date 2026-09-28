@@ -2,6 +2,9 @@ import express from "express";
 import { auth, isConfigured } from "../config/firebaseAdmin.js";
 import { verifyFirebaseToken } from "../middleware/authMiddleware.js";
 import { User } from "../models/user.js";
+import dotenv from "dotenv";
+
+dotenv.config({ path: "../.env" });
 
 const router = express.Router();
 

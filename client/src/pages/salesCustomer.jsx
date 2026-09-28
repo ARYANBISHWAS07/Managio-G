@@ -23,14 +23,14 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { 
-  Search, 
-  MoreHorizontal, 
-  FileEdit, 
-  ChevronLeft, 
-  ChevronRight, 
-  Filter, 
-  Users
+import {
+  Search,
+  MoreHorizontal,
+  FileEdit,
+  ChevronLeft,
+  ChevronRight,
+  Filter,
+  Users,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import api from "@/lib/axios";
@@ -75,7 +75,7 @@ const CustomerManagement = ({ user }) => {
   // const handleDeleteCustomer = async (customerId) => {
   //   try {
   //     const deletedCustomer = customers.find((customer) => customer._id === customerId);
-  //     await axios.delete(`http://localhost:3000/api/customer/delete-customer`, {
+  //     await axios.delete(`{import.meta.env.VITE_API_URL}/api/customer/delete-customer`, {
   //       params: { userID: user._id, customerID: customerId },
   //     });
   //     setCustomers((prevCustomers) => prevCustomers.filter((customer) => customer._id !== customerId));
@@ -93,7 +93,9 @@ const CustomerManagement = ({ user }) => {
 
     switch (filterField) {
       case "customerId":
-        return `CUST-${customer._id.toString().padStart(4, '0')}`.toLowerCase().includes(searchTerm.toLowerCase());
+        return `CUST-${customer._id.toString().padStart(4, "0")}`
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
       case "gstin":
         return customer.gstIN.toLowerCase().includes(searchTerm.toLowerCase());
       case "contactNo":
@@ -101,12 +103,16 @@ const CustomerManagement = ({ user }) => {
       case "email":
         return customer.email.toLowerCase().includes(searchTerm.toLowerCase());
       case "address":
-        return customer.address.toLowerCase().includes(searchTerm.toLowerCase());
+        return customer.address
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
       case "all":
       default:
         return (
           customer.gstIN.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          `CUST-${customer._id.toString().padStart(4, '0')}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          `CUST-${customer._id.toString().padStart(4, "0")}`
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
           customer.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
           customer.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
           customer.contactNo.includes(searchTerm)
@@ -116,7 +122,10 @@ const CustomerManagement = ({ user }) => {
 
   const indexOfLastCustomer = currentPage * entriesPerPage;
   const indexOfFirstCustomer = indexOfLastCustomer - entriesPerPage;
-  const currentCustomers = filteredCustomers.slice(indexOfFirstCustomer, indexOfLastCustomer);
+  const currentCustomers = filteredCustomers.slice(
+    indexOfFirstCustomer,
+    indexOfLastCustomer
+  );
   const totalPages = Math.ceil(filteredCustomers.length / entriesPerPage);
 
   const handleFilterChange = (value) => {
@@ -321,15 +330,15 @@ const CustomerManagement = ({ user }) => {
           Showing {filteredCustomers.length > 0 ? indexOfFirstCustomer + 1 : 0} to {Math.min(indexOfLastCustomer, filteredCustomers.length)} of {filteredCustomers.length} customer{filteredCustomers.length !== 1 ? 's' : ''}
         </div>
         <div className="flex items-center gap-2">
-          <Button 
-            variant="outline" 
-            size="sm" 
+          <Button
+            variant="outline"
+            size="sm"
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
           >
             <ChevronLeft className="h-4 w-4 mr-1" /> Previous
           </Button>
-          
+
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
             <Button
               key={page}
@@ -341,12 +350,14 @@ const CustomerManagement = ({ user }) => {
               {page}
             </Button>
           ))}
-          
-          <Button 
-            variant="outline" 
+
+          <Button
+            variant="outline"
             size="sm"
             disabled={currentPage === totalPages || totalPages === 0}
-            onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+            }
           >
             Next <ChevronRight className="h-4 w-4 ml-1" />
           </Button>

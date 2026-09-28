@@ -51,16 +51,16 @@ const ProductsPage = ({ user }) => {
   }, [user]);
 
   const handleEditClick = (product) => {
-    setSelectedProduct(product); 
-    setIsDrawerOpen(true); 
+    setSelectedProduct(product);
+    setIsDrawerOpen(true);
   };
 
   const closeDrawer = () => {
-    setIsDrawerOpen(false); 
-    setSelectedProduct(null); 
+    setIsDrawerOpen(false);
+    setSelectedProduct(null);
   };
 
-   const handleProductUpdate = (updatedProduct) => {
+  const handleProductUpdate = (updatedProduct) => {
     // Add a safety check to ensure updatedProduct and its _id exist
     if (updatedProduct && updatedProduct._id) {
       setProducts((prevProducts) =>

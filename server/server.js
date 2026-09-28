@@ -16,7 +16,13 @@ import purchaseRoutes from "./routes/purchaseRoute.js";
 import salesRoutes from "./routes/salesRoute.js";
 import warehouseRoutes from "./routes/warehouseRoute.js";
 import newCustomerRoute from "./routes/newCustomerRoute.js";
+<<<<<<< HEAD
 import supplierRoutes from "./routes/supplierRoutes.js";
+=======
+import supplierRoutes from "./routes/supplierRoutes.js"
+
+dotenv.config();
+>>>>>>> upstream/improved-version
 
 const app = express();
 
@@ -55,7 +61,7 @@ app.use("/api/items", itemRoutes);
 app.use("/api/customer", customerRoutes);
 
 //___________________________________________________________________________________________________________________________________________________
-// const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 const httpServer = createServer(app);
 initSocket(httpServer);
